@@ -2,7 +2,6 @@ package com.kubukoz.demo
 
 import scalaz.zio._
 import scalaz.zio.console._
-import scala.concurrent.ExecutionContext
 
 object Main extends App {
 
@@ -11,7 +10,7 @@ object Main extends App {
   val program = for {
     before <- messages.findAll
     _      <- putStrLn("Before: " + before.toString)
-    _      <- ZIO.foreachPar(List.tabulate(100)(n => "Hello " + n))(messages.add(_).on(ExecutionContext.global))
+    _      <- ZIO.foreachPar(List.tabulate(100)(n => "Hello " + n))(messages.add)
     after  <- messages.findAll
     _      <- putStrLn("After: " + after.toString)
   } yield ()
